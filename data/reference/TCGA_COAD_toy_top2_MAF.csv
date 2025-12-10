@@ -1,0 +1,7 @@
+"patient_id","Hugo_Symbol","Variant_Classification","Chromosome","Start_Position"
+"TCGA-5M-AAT4","APC","Nonsense_Mutation","19",583422
+"TCGA-5M-AAT4","APC","Nonsense_Mutation","9",183204
+"TCGA-5M-AAT4","KRAS","Missense_Mutation","3",883281
+"TCGA-5M-AAT6","KRAS","Nonsense_Mutation","8",669543
+"TCGA-5M-AAT6","APC","Silent","7",277324
+"TCGA-5M-AAT6","SMAD4","Missense_Mutation","10",944672
