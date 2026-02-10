@@ -1,0 +1,3 @@
+peptide,allele,vaf,t_alt_count,t_ref_count
+KLVVVGADGV,HLA-A*02:01,0.3,30,70
+VGADGVGKSAL,HLA-C*07:02,0.15,15,85
