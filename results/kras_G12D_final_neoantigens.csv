@@ -1,0 +1,3 @@
+IC50_nM,peptide,allele,Binding class,vaf,t_alt_count,t_ref_count,TPM,gene
+110.7806848,KLVVVGADGV,HLA-A*02:01,strong binder ,0.3,30,70,15.24,KRAS
+382.7003894,VGADGVGKSAL,HLA-C*07:02,moderate binder,0.15,15,85,15.24,KRAS
