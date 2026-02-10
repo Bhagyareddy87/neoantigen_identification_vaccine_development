@@ -1,0 +1,3 @@
+IC50_nM,peptide,allele,Binding class,vaf,t_alt_count,t_ref_count,TPM,gene,norm_ic50,norm_TPM,norm_vaf,neoantigen_score,immunogenicity_score,final_score
+110.7806848,KLVVVGADGV,HLA-A*02:01,strong binder ,0.3,30,70,15.24,KRAS,1,1,1,higher ,0.20349,0.8406980000000001
+382.7003894,VGADGVGKSAL,HLA-C*07:02,moderate binder,0.15,15,85,15.24,KRAS,0,1,0,lower ,-0.17854,0.21429199999999998
