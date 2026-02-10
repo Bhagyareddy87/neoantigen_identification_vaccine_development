@@ -1,6 +1,8 @@
-Neoantigen Identification \& Vaccine Development Pipeline
+\# Neoantigen Identification \& Vaccine Development Pipeline
 
-Project Overview
+
+
+\## Project Overview
 
 
 
@@ -12,19 +14,13 @@ The pipeline integrates:
 
 
 
-Somatic mutation data
+\- Somatic mutation data
 
+\- Tumor RNA-seq gene expression data
 
+\- Variant allele frequency (VAF) information
 
-Tumor RNA-seq gene expression data
-
-
-
-Variant allele frequency (VAF) information
-
-
-
-MHC class I binding predictions
+\- MHC class I binding predictions
 
 
 
@@ -32,7 +28,11 @@ Due to controlled-access restrictions on patient-level genomic data, the current
 
 
 
-Scientific Rationale
+---
+
+
+
+\## Scientific Rationale
 
 
 
@@ -40,19 +40,13 @@ Tumor neoantigens arise from somatic, non-synonymous mutations that generate nov
 
 
 
-A protein-altering mutation generates a novel peptide
+\- A protein-altering mutation generates a novel peptide
 
+\- The peptide binds to patient-specific MHC molecules
 
+\- The corresponding gene is expressed in the tumor
 
-The peptide binds to patient-specific MHC molecules
-
-
-
-The corresponding gene is expressed in the tumor
-
-
-
-The mutation is present at sufficient variant allele frequency (VAF)
+\- The mutation is present at sufficient variant allele frequency (VAF)
 
 
 
@@ -60,15 +54,23 @@ This project follows standard immunogenomics strategies used in contemporary neo
 
 
 
-Workflow Summary
+---
 
 
 
-Somatic mutations → Mutant peptide generation → MHC class I binding prediction → Expression \& VAF filtering → Neoantigen prioritization
+\## Workflow Summary
 
 
 
-HLA Typing Assumptions
+\*\*Somatic mutations → Mutant peptide generation → MHC class I binding prediction → Expression \& VAF filtering → Neoantigen prioritization\*\*
+
+
+
+---
+
+
+
+\## HLA Typing Assumptions
 
 
 
@@ -76,281 +78,171 @@ Due to controlled-access restrictions on patient-level FASTQ/BAM files, patient-
 
 
 
-This assumption is explicitly documented and can be replaced with true patient-specific HLA calls (e.g., using OptiType or seq2HLA) without structural changes to the pipeline.
+This assumption is explicitly documented and can be replaced with true patient-specific HLA calls (e.g., OptiType or seq2HLA) without structural changes to the pipeline.
 
 
 
-Current Project Status
-
-Data Collection \& Preprocessing (Completed)
+---
 
 
 
-Cancer genomics data were accessed using TCGAbiolinks (R)
+\## Current Project Status
 
 
 
-Data types considered:
+\### Data Collection \& Preprocessing (Completed)
 
 
 
-Somatic mutation data (MAF-derived)
+\- Cancer genomics data were accessed using \*\*TCGAbiolinks (R)\*\*
 
+\- Data types considered:
 
+&nbsp; - Somatic mutation data (MAF-derived)
 
-Tumor RNA-seq expression data
+&nbsp; - Tumor RNA-seq expression data
 
+&nbsp; - Clinical and sample metadata
 
+\- Controlled-access constraints were handled appropriately
 
-Clinical and sample metadata
-
-
-
-Controlled-access constraints were handled appropriately
-
-
-
-Toy datasets were generated where patient-level data could not be shared
+\- Toy datasets were generated where patient-level data could not be shared
 
 
 
 Prepared input files include:
 
+\- `mut\_final.csv` — curated somatic mutation table
 
+\- `tumor\_rna\_final.csv` — tumor gene expression (TPM)
 
-mut\_final.csv — curated somatic mutation table
+\- `final\_patients.csv` — patient and sample metadata
 
+\- `clinical\_final.csv` — clinical annotations
 
 
-tumor\_rna\_final.csv — tumor gene expression (TPM)
 
+---
 
 
-final\_patients.csv — patient and sample metadata
 
+\### Workflow Design (Completed)
 
 
-clinical\_final.csv — clinical annotations
 
+A complete conceptual and computational workflow was designed following established neoantigen discovery pipelines.
 
 
-Workflow Design (Completed)
 
+---
 
 
-A complete conceptual and computational workflow was designed following established neoantigen discovery pipelines. The design supports future integration of:
 
+\## Implemented Neoantigen Discovery Pipeline (Toy Data)
 
 
-Patient-specific HLA typing
 
+\### Mutant Peptide Generation
 
+\- Parsed protein-level mutation annotations (e.g., `p.R248Q`)
 
-Immunogenicity prediction models
+\- Generated overlapping 8–11mer mutant peptides using canonical protein sequences
 
+\- Output: `candidate\_peptides.csv`
 
 
-Machine learning–based neoantigen re-ranking
 
+\### MHC Class I Binding Prediction
 
+\- Implemented using \*\*mhcflurry\*\*
 
-Implemented Neoantigen Discovery Pipeline (Toy Data)
+\- Output: `binding\_predictions.csv`
 
 
 
-The following core steps have been implemented and validated using toy datasets:
+\### Expression \& Variant Allele Frequency Filtering
 
+\- Integrated RNA expression (TPM) and mutation VAF data
 
+\- Output: `filtered\_candidates.csv`
 
-Mutant Peptide Generation
+&nbsp; - Example: `kras\_G12D\_final\_neoantigens.csv`
 
 
 
-Parsed protein-level mutation annotations (e.g., p.R248Q)
+\### Neoantigen Prioritization
 
+\- Composite scoring using binding, expression, and VAF
 
+\- Output: `priority\_candidates.csv`
 
-Generated overlapping 8–11mer mutant peptides using canonical protein sequences (gencode.v46.pc\_translations.fa)
+&nbsp; - Example: `kras\_G12D\_priority\_neoantigens.csv`
 
 
 
-Output: candidate\_peptides.csv
+---
 
 
 
-MHC Class I Binding Prediction
+\## Planned Extensions (Future Work)
 
 
 
-Implemented MHC class I binding prediction using mhcflurry
+\- Patient-specific HLA typing (OptiType / seq2HLA)
 
+\- Immunogenicity prediction (PRIME, DeepHLApan)
 
+\- IEDB epitope integration
 
-Supports patient-specific HLA alleles when available
+\- Machine learning–based re-ranking
 
+\- Cohort-level visualization
 
 
-Common HLA alleles used for demonstration where required
 
+---
 
 
-Output: binding\_predictions.csv
 
+\## Tools \& Technologies Used
 
 
-Expression \& Variant Allele Frequency Filtering
 
+\- \*\*R\*\*: TCGAbiolinks
 
+\- \*\*Python\*\*: pandas, numpy, biopython
 
-Integrated RNA expression (TPM) and mutation VAF data
+\- \*\*MHC binding\*\*: mhcflurry
 
+\- \*\*Data sources\*\*: TCGA, GENCODE, UniProt
 
 
-Applied biologically motivated thresholds
 
+---
 
 
-Output: filtered\_candidates.csv
 
+\## Reproducibility \& Data Ethics
 
 
-(example: kras\_G12D\_final\_neoantigens.csv)
 
+\- No controlled-access data is shared
 
+\- Toy datasets used for demonstration
 
-Neoantigen Prioritization
+\- All steps are scripted and reproducible
 
 
 
-Implemented a composite neoantigen scoring strategy combining:
+---
 
 
 
-MHC binding strength
-
-
-
-Tumor gene expression
-
-
-
-Variant allele frequency
-
-
-
-Ranked candidates to identify highest-priority neoantigens
-
-
-
-Output: priority\_candidates.csv
-
-
-
-(example: kras\_G12D\_priority\_neoantigens.csv)
-
-
-
-What This Project Demonstrates
-
-
-
-Understanding of neoantigen biology and cancer immunogenomics
-
-
-
-Integration of multi-omics cancer datasets
-
-
-
-Practical implementation of MHC class I binding prediction
-
-
-
-End-to-end neoantigen filtering and prioritization logic
-
-
-
-Modular and reproducible pipeline design
-
-
-
-Responsible handling of controlled-access data using toy datasets
-
-
-
-Planned Extensions (Future Work)
-
-
-
-The following components are not implemented in the current version and represent future extensions:
-
-
-
-Patient-specific HLA typing (OptiType / seq2HLA)
-
-
-
-Immunogenicity prediction (PRIME, DeepHLApan)
-
-
-
-Integration of experimentally validated epitopes from IEDB
-
-
-
-Machine learning–based neoantigen re-ranking
-
-
-
-Visualization and cohort-level summary analyses
-
-
-
-Tools \& Technologies Used
-
-
-
-R: TCGAbiolinks (TCGA data acquisition)
-
-
-
-Python: pandas, numpy, biopython
-
-
-
-MHC binding prediction: mhcflurry
-
-
-
-Data sources: TCGA, GENCODE, UniProt
-
-
-
-Reproducibility \& Data Ethics
-
-
-
-No raw controlled-access patient data is shared
-
-
-
-Toy datasets are used to demonstrate pipeline logic
-
-
-
-All analysis steps are scripted and reproducible
-
-
-
-Designed in compliance with TCGA data usage guidelines
-
-
-
-Author Notes
+\## Author Notes
 
 
 
 This project represents a research-grade, portfolio-ready neoantigen discovery pipeline.
 
-The current implementation focuses on validated core logic and prioritization, with future extensions planned as data access and computational resources expand.
+
 
