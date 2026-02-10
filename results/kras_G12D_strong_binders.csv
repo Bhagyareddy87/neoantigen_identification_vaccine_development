@@ -1,3 +1,3 @@
-ic50_nm,peptide,allele,binding_class
-110.7806848,KLVVVGADGV,HLA-A*02:01,binder
-382.7003894,VGADGVGKSAL,HLA-C*07:02,binder
+IC50_nM,peptide,allele,Binding class
+110.7806848,KLVVVGADGV,HLA-A*02:01,strong binder 
+382.7003894,VGADGVGKSAL,HLA-C*07:02,moderate binder
